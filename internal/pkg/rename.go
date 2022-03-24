@@ -22,7 +22,8 @@ func Rename(isActualRun bool, node *FsNode, config Config) error {
 		}
 		// Rename only when needed
 		if candidateName != node.name {
-			// Safe to rename (unless the filesystem changed out-of-band in the meantime, unbeknownst to us)
+			// Safe to rename (unless the filesystem changed out-of-band in the
+			// meantime, unbeknownst to us)
 			if !node.HasSiblingOfName(candidateName) {
 				node.name = candidateName
 				if isActualRun {
@@ -32,18 +33,22 @@ func Rename(isActualRun bool, node *FsNode, config Config) error {
 					}
 				}
 				if (!isActualRun) || (!config.SilentMode) {
-					fmt.Println(color.RedString(node.originalPath), "=>", color.GreenString(node.Path()))
+					fmt.Println(
+						color.RedString(node.originalPath),
+						"=>", color.GreenString(node.Path()))
 				}
 				break
 			}
 		} else {
 			if !isActualRun {
-				absPath := node.Path()
-				if node.originalPath == absPath {
+				if node.originalPath == node.Path() {
 					fmt.Println(node.originalPath, "[unmodified]")
 				} else {
-					// path changed because at least one parent directory has been renamed
-					fmt.Println(color.RedString(node.originalPath), "=>", color.GreenString(node.Path()))
+					// path changed because at least one parent directory has
+					// been renamed
+					fmt.Println(
+						color.RedString(node.originalPath),
+						"=>", color.GreenString(node.Path()))
 				}
 			}
 			break
