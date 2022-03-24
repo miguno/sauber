@@ -24,6 +24,20 @@ user@nas:~$ ls /volume1/music-share
     └── Intro.mp3
 ```
 
+# Download
+
+See [Releases](https://github.com/miguno/sauber/releases).
+
+The download is a standalone executable, which does not need installation.
+Just run it! It is recommended, though optional, to rename your downloaded
+binary to simply `sauber`.
+
+| Executable Name               | Operating System     |
+|-------------------------------|----------------------|
+| `sauber_linux-386`            | Linux x86 32-bit     |
+| `sauber_linux-amd64`          | Linux x86 64-bit     |
+| `sauber_macos-arm64`          | macOS ARM 64-bit     |
+
 # Usage
 
 sauber sanitizes the names of files and directories by replacing umlauts,
