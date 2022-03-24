@@ -23,11 +23,9 @@ func Find(rootPath string, skipSet map[string]bool) (*FsNode, error) {
 			}
 			if !skipPath(path, skipSet) {
 				if rootNode != nil {
-					// TODO if rootNode moves path -> basename, this needs to be updated, too?
 					rootNode.AddNestedChild(path, info.IsDir())
 				} else {
 					rootNode = &FsNode{
-						// TODO path -> basename or sth like that?
 						name:         filepath.Base(path),
 						originalPath: path,
 						isDir:        info.IsDir(),
