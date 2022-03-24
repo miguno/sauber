@@ -1,7 +1,10 @@
 # sauber [![CI workflow status](https://github.com/miguno/sauber/actions/workflows/ci.yml/badge.svg)](https://github.com/miguno/sauber/actions/workflows/ci.yml)
 
 A command line tool that sanitizes filenames on a Synology NAS so the files can
-be read and accessed through shared network drives on the NAS.
+be read and accessed through shared network drives on the NAS.  This solves the
+annoying problem that you cannot access files and folders on a shared network
+drive of a Synology NAS if their names contain special characters, such as
+German umlauts 98 (`Ä`), French accents (`é`), and Polish diacritics (`ł`).
 
 ```sh
 # Before
