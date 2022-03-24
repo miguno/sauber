@@ -24,28 +24,7 @@ type FsNode struct {
 	children     []*FsNode
 }
 
-func (node FsNode) OriginalPath() string {
-	return node.originalPath
-}
-
-func (node FsNode) OriginalName() string {
-	return filepath.Base(node.originalPath)
-}
-
-func (node FsNode) Apply(f func(n FsNode)) {
-	f(node)
-	for _, child := range node.children {
-		(*child).Apply(f)
-	}
-}
-
-func (node FsNode) Print() {
-	node.Apply(func(n FsNode) {
-		fmt.Println(n.Path())
-	})
-}
-
-// AddNestedChild Updates the node's tree with the given path, creating any
+// AddNestedChild updates the node's tree with the given path, creating any
 // missing child nodes in the hierarchy as needed (think: sub-directories).
 //
 // For example, if node path is "/csgo", then adding path "faze/ropz" changes
@@ -71,7 +50,8 @@ func (node *FsNode) AddNestedChild(originalPath string, isDir bool) {
 		if child == nil {
 			var isDirectory bool
 			if len(subPaths) > 1 {
-				// This child has children itself, which means it MUST be a directory.
+				// This node has children itself, which means it MUST be a
+				// directory.
 				isDirectory = true
 			} else {
 				// Leaf node, i.e., we're at the end of the directory tree.
@@ -95,6 +75,39 @@ func (node *FsNode) AddNestedChild(originalPath string, isDir bool) {
 	}
 }
 
+func (node FsNode) Apply(f func(n FsNode)) {
+	f(node)
+	for _, child := range node.children {
+		(*child).Apply(f)
+	}
+}
+
+// HasSiblingOfName returns true if any of the node's siblings is already
+// named the same as the provided name, false otherwise.
+//
+// Used to detect name collisions during rename, and thus to determine
+// whether we can safely rename the node to the given name.
+func (node FsNode) HasSiblingOfName(name string) bool {
+	for _, sibling := range node.Siblings() {
+		if sibling.name == name {
+			return true
+		}
+	}
+	return false
+}
+
+func (node FsNode) IsRoot() bool {
+	return node.parent == nil
+}
+
+func (node FsNode) OriginalName() string {
+	return filepath.Base(node.originalPath)
+}
+
+func (node FsNode) OriginalPath() string {
+	return node.originalPath
+}
+
 func (node FsNode) Path() string {
 	var path string
 	if node.parent != nil {
@@ -114,25 +127,6 @@ func (node FsNode) PathDecorated() string {
 		path += "[d]"
 	}
 	return path
-}
-
-// RenamePath returns the node's current path during a running rename
-// operation. The path can differ from the original path because
-// one of the node's parents might have been renamed in the meantime.
-//
-// Used as the source path when renaming the node on the actual
-// filesystem.
-func (node FsNode) RenamePath() string {
-	var path string
-	if node.parent != nil {
-		path = (*node.parent).Path()
-	}
-	path = filepath.Join(path, node.OriginalName())
-	if node.IsRoot() {
-		originalParentPath := filepath.Dir(node.OriginalPath())
-		path = filepath.Join(originalParentPath, path)
-	}
-	return filepath.Clean(path)
 }
 
 func (node FsNode) Paths() []string {
@@ -165,8 +159,28 @@ func (node FsNode) paths(isDecorate bool) []string {
 	return paths
 }
 
-func (node FsNode) IsRoot() bool {
-	return node.parent == nil
+func (node FsNode) Print() {
+	node.Apply(func(n FsNode) {
+		fmt.Println(n.Path())
+	})
+}
+
+// RenamePath returns the node's current path during a running rename operation.
+// The path can differ from the original path because one of the node's parents
+// might have been renamed in the meantime.
+//
+// Used as the source path when renaming the node on the actual filesystem.
+func (node FsNode) RenamePath() string {
+	var path string
+	if node.parent != nil {
+		path = (*node.parent).Path()
+	}
+	path = filepath.Join(path, node.OriginalName())
+	if node.IsRoot() {
+		originalParentPath := filepath.Dir(node.OriginalPath())
+		path = filepath.Join(originalParentPath, path)
+	}
+	return filepath.Clean(path)
 }
 
 func (node FsNode) Siblings() []FsNode {
@@ -181,18 +195,4 @@ func (node FsNode) Siblings() []FsNode {
 	} else {
 		return nil
 	}
-}
-
-// HasSiblingOfName returns true if any of the node's siblings is already
-// named the same as the provided name, false otherwise.
-//
-// Used to detect name collisions during rename, and thus to determine
-// whether we can safely rename the node to the given name.
-func (node FsNode) HasSiblingOfName(name string) bool {
-	for _, sibling := range node.Siblings() {
-		if sibling.name == name {
-			return true
-		}
-	}
-	return false
 }
