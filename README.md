@@ -133,5 +133,16 @@ This is the purpose of `sauber`.
       be within 143 characters (up to about 47 characters for non-Latin
       languages), and the length of the file path should be within 2,048
       characters.
+* [Synology Help: My file name is garbled. What can I do?](https://kb.synology.com/en-global/DSM/tutorial/garbled_name_smb_FileStation)
+  -- did not help in my case (Synology DSM 6.x), as the SMB configuration was
+  already set up correctly
 * [Synology encryption 143 character limit - does it refer to file name or the entire path?](https://www.reddit.com/r/synology/comments/m93gha/synology_encryption_143_character_limit_does_it/)
 
+# Notes
+
+* Some people who use Synology NAS running DSM 7.x together with macOS clients
+  have reported success when using umlauts etc. in file names.  This required
+  enabling and configuring the `vfs_fruit` SMB module in the Samba config
+  at `/etc/samba/smb.conf`.  Unfortunately, this module is only supported on
+  Synology DSM 7.x, not on DSM 6.x (see
+  [Reddit discussion](https://www.reddit.com/r/synology/comments/p5bz8t/)).
