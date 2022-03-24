@@ -91,6 +91,24 @@ Examples:
 Suggestions? Bugs? Questions? Go to https://github.com/miguno/sauber/
 ```
 
+# How are names of files and filders sanitized?
+
+Here's a short summary of what sanitization rules you can expect. The exact
+rules are defined in [sanitize.go](internal/pkg/sanitize.go), with further
+examples in [sanitize_test.go](internal/pkg/sanitize_test.go).
+
+| Original                      | Replacement                      |
+|-------------------------------|----------------------------------|
+| Ä, Ö, Ü, ä, ö, ü, ß           | Ae, Oe, Ue, ae, oe, ue, ss       |
+| !, ?, \|, $                   | _ (underscore)                   |
+| – (en dash), — (em dash)      | - (hyphen)                       |
+| ạàąâåÅ                        | aaaaaA                           |
+| čćçÇČĆ                        | cccCCC                           |
+| đĐ                            | dD                               |
+| ęéèê                          | eeee                             |
+| żźžŻŽ                         | zzzZZ                            |
+| (and more)                    | (and more)                       |
+
 # Why do I need sauber?
 
 If you are reading this, you are likely a fellow Synology NAS user.
