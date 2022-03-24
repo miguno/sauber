@@ -4,6 +4,10 @@ semver := "1.0.0-alpha"
 commit := `git show -s --format=%h`
 version := semver + "+" + commit
 
+# print available targets
+default:
+    just --list
+
 # format source code
 format:
     @echo "Formatting source code ..."
