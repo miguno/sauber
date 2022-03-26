@@ -39,6 +39,8 @@ binary to simply `sauber`.
 |-------------------------------|----------------------|
 | `sauber_linux-386`            | Linux x86 32-bit     |
 | `sauber_linux-amd64`          | Linux x86 64-bit     |
+| `sauber_linux-arm`            | Linux ARM 32-bit     |
+| `sauber_linux-arm64`          | Linux ARM 64-bit     |
 | `sauber_macos-arm64`          | macOS ARM 64-bit     |
 
 # Usage
