@@ -64,8 +64,8 @@ build:
 release: test
     @echo "Building release executables (incl. cross compilation) ..."
     # `go tool dist list` shows supported architectures (GOOS)
-    GOOS=darwin  GOARCH=arm64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_macos-arm64       cmd/sauber/main.go
-    GOOS=linux   GOARCH=386   go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-386         cmd/sauber/main.go
-    GOOS=linux   GOARCH=amd64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-amd64       cmd/sauber/main.go
-    GOOS=linux   GOARCH=arm   go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-arm         cmd/sauber/main.go
-    GOOS=linux   GOARCH=arm64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-arm64       cmd/sauber/main.go
+    GOOS=darwin  GOARCH=arm64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_macos-arm64 cmd/sauber/main.go
+    GOOS=linux   GOARCH=386   go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-386   cmd/sauber/main.go
+    GOOS=linux   GOARCH=amd64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-amd64 cmd/sauber/main.go
+    GOOS=linux   GOARCH=arm   go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-arm   cmd/sauber/main.go
+    GOOS=linux   GOARCH=arm64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-arm64 cmd/sauber/main.go
