@@ -4,6 +4,8 @@ semver := "1.0.0-alpha"
 commit := `git show -s --format=%h`
 version := semver + "+" + commit
 
+coverage_profile_log := "coverage_profile.txt"
+
 # print available targets
 default:
     just --list
@@ -41,7 +43,12 @@ deps:
 
 # run tests
 test:
-    go test ./...
+    go test -cover ./...
+
+# show test coverage
+coverage:
+    go test -coverprofile={{coverage_profile_log}} ./...
+    go tool cover -html={{coverage_profile_log}}
 
 # run executable for local OS
 run:
