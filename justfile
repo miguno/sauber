@@ -60,7 +60,7 @@ run:
     go run -ldflags="-X 'main.Version={{version}}'" cmd/sauber/main.go
 
 # build executable for local OS
-build:
+build: test-vanilla
     @echo "Building executable for local OS ..."
     go build -ldflags="-X 'main.Version={{version}}'" -o sauber cmd/sauber/main.go
 

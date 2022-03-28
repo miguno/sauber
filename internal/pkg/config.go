@@ -7,14 +7,6 @@ type Config struct {
 	SilentMode               bool
 }
 
-func DefaultConfig() Config {
-	var skipDirectories = map[string]bool{
-		"@eaDir": true, // special directory on Synology NAS
-	}
-	return Config{
-		SkipDirectories:          skipDirectories,
-		MaxRenameAttemptsPerPath: 100000,
-		MaxBasenameLength:        999999999,
-		SilentMode:               false,
-	}
+var DefaultSkipDirectories = map[string]bool{
+	"@eaDir": true, // special directory on Synology NAS
 }
