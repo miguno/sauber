@@ -56,25 +56,38 @@ let you verify any changes it would make.
 > as user `root`, however.
 
 ```
-$ sauber -h
-Usage: sauber [-dfhsv] [-n value] [-t value] [parameters ...]
- -d, --dry-run  only show what would be done (default mode)
- -f, --force    make actual changes to filesystem ***modifies your data***
- -h, --help     print this usage information and exit
- -n, --max-rename-attempts=value
-                maximum number of rename attempts per file/directory;
-                sauber will terminate when it can not find a sanitized
-                name after this many attempts [100000]
- -s, --silent   suppress output when sanitizing (ignored when dry-running)
- -t, --truncate=value
-                max number of characters (actually: bytes) in the sanitized name
-                of a file/dir; any additional characters are truncated, though
-                file extensions are preserved;
-                Note: Encrypted drives on Synology NAS devices have a limit
-                of 143 characters per file/dir (limit applies to basename,
-                not full path). For details see the Synology DSM Tech Specs
-                or view the summary at https://github.com/miguno/sauber/. [999999999]
- -v, --version  print version information and exit
+Usage:
+  sauber [OPTIONS] [<path>]
+
+Application Options:
+  -d, --dry-run              Only show what would be done (default mode)
+  -f, --force                Make actual changes to filesystem ***modifies your
+                             data***
+  -n, --max-rename-attempts= Maximum number of rename attempts per file/folder.
+                             sauber will terminate when it can not find a
+                             sanitized name after this many attempts. (default:
+                             100000)
+  -s, --silent               Suppress output when sanitizing (ignored when
+                             dry-running)
+  -t, --truncate=            Max number of characters (actually: bytes) in the
+                             sanitized name of a file/folder. Any additional
+                             characters are truncated, though file extensions
+                             are preserved. Note: Encrypted drives on Synology
+                             NAS devices have a limit of 143 characters per
+                             file/folder (limit applies to basename, not full
+                             path). For details see the Synology DSM Tech Specs
+                             or view the summary at
+                             https://github.com/miguno/sauber/. (default:
+                             999999999)
+  -v, --version              Print version information and exit
+
+Help Options:
+  -h, --help                 Show this help message
+
+Arguments:
+  <path>:                    Path to process, including any sub-folders and
+                             files if path is a folder. (Additional positional
+                             arguments are ignored.)
 
 sauber sanitizes the names of files and directories by replacing umlauts,
 accents, and similar diacritics.  By default, it performs a dry run to
