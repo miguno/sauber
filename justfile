@@ -41,9 +41,13 @@ tidy:
 deps:
     go mod graph
 
-# run tests
-test:
-    go test -cover ./...
+# run tests with colorized output (requires https://github.com/kyoh86/richgo)
+test *FLAGS:
+    richgo test -cover {{FLAGS}} ./...
+
+# run tests (vanilla), used for CI workflow
+test-vanilla *FLAGS:
+    go test {{FLAGS}} -cover ./...
 
 # show test coverage
 coverage:
@@ -61,7 +65,7 @@ build:
     go build -ldflags="-X 'main.Version={{version}}'" -o sauber cmd/sauber/main.go
 
 # build release executables for all supported platforms
-release: test
+release: test-vanilla
     @echo "Building release executables (incl. cross compilation) ..."
     # `go tool dist list` shows supported architectures (GOOS)
     GOOS=darwin  GOARCH=arm64 go build -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_macos-arm64 cmd/sauber/main.go
