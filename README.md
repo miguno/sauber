@@ -27,21 +27,25 @@ user@nas:~$ ls /volume1/music-share
     └── Intro.mp3
 ```
 
-# Download
+# Installation
 
-See [Releases](https://github.com/miguno/sauber/releases).
+Download the [**Latest Release**](https://github.com/miguno/sauber/releases)
+for your operating system (see table below) and just run it!
 
-The download is a standalone executable, which does not need installation.
-Just run it! It is recommended, though optional, to rename your downloaded
-binary to simply `sauber`.
+Sauber is a standalone executable, which does not need installation.  It is
+recommended, though optional, to rename your downloaded executable to simply
+`sauber`.
 
-| Executable Name               | Operating System     |
-|-------------------------------|----------------------|
-| `sauber_linux-386`            | Linux x86 32-bit     |
-| `sauber_linux-amd64`          | Linux x86 64-bit     |
-| `sauber_linux-arm`            | Linux ARM 32-bit     |
-| `sauber_linux-arm64`          | Linux ARM 64-bit     |
-| `sauber_macos-arm64`          | macOS ARM 64-bit     |
+| Executable Name               | Operating System     | `uname -m` |
+|-------------------------------|----------------------|------------|
+| `sauber_linux-386`            | Linux x86 32-bit     | i386       |
+| `sauber_linux-amd64`          | Linux x86 64-bit     | x86_64     |
+| `sauber_linux-arm`            | Linux ARM 32-bit     | arm        |
+| `sauber_linux-arm64`          | Linux ARM 64-bit     | arm64      |
+| `sauber_macos-arm64`          | macOS ARM 64-bit     | arm64      |
+
+To find the correct exectuable for your NAS, run `uname -m` in a terminal on
+the NAS and match it with the corresponding entry in the table above.
 
 # Usage
 
