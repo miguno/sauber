@@ -31,16 +31,17 @@ func Rename(isActualRun bool, node *FsNode, config Config) error {
 					if err != nil {
 						return err
 					}
-				}
-				if (!isActualRun) || (!config.SilentMode) {
-					fmt.Println(
-						color.RedString(node.originalPath),
-						"=>", color.GreenString(node.Path()))
+				} else {
+					if !config.SilentMode {
+						fmt.Println(
+							color.RedString(node.originalPath),
+							"=>", color.GreenString(node.Path()))
+					}
 				}
 				break
 			}
 		} else {
-			if !isActualRun {
+			if !isActualRun && !config.SilentMode {
 				if node.originalPath == node.Path() {
 					fmt.Println(node.originalPath, "[unmodified]")
 				} else {
