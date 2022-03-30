@@ -26,8 +26,8 @@ audit:
 # run linters (requires https://github.com/dominikh/go-tools)
 lint:
     staticcheck -f stylish ./... || \
-        echo "\nRun \`just explain <LintIdentifier, e.g. SA1006>\` for details." && \
-        exit 1
+        (echo "\nRun \`just explain <LintIdentifier, e.g. SA1006>\` for details." && \
+        exit 1)
 
 # explain lint identifier (e.g., "SA1006")
 explain lint-identifier:
