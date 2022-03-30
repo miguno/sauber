@@ -152,9 +152,7 @@ func (node FsNode) paths(isDecorate bool) []string {
 		} else {
 			childPaths = (*child).Paths()
 		}
-		for _, cp := range childPaths {
-			paths = append(paths, cp)
-		}
+		paths = append(paths, childPaths...)
 	}
 	return paths
 }

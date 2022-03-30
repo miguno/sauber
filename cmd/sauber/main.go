@@ -7,7 +7,7 @@ import (
 
 	"github.com/jessevdk/go-flags"
 
-	"github.com/miguno/sauber/internal/pkg"
+	internal "github.com/miguno/sauber/internal/pkg"
 )
 
 // Version is used to inject version information during the project build process (see `justfile`).
@@ -79,8 +79,8 @@ Suggestions? Bugs? Questions? Go to https://github.com/miguno/sauber/`
 		rootPath := Options.Args.Folder
 		root, err := internal.Find(rootPath, config.SkipDirectories)
 		if err != nil {
-			log.Fatal(fmt.Sprintf("failed to access or list contents of '%s', because %s",
-				rootPath, err.Error()))
+			log.Fatalf("failed to access or list contents of '%s', because %s",
+				rootPath, err.Error())
 		}
 		isActualRun := Options.ActualRun && !Options.DryRun
 		process(isActualRun, root, config)

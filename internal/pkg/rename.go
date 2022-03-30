@@ -58,7 +58,7 @@ func Rename(isActualRun bool, node *FsNode, config Config) error {
 	}
 
 	if renameAttemptsThusFar >= config.MaxRenameAttemptsPerPath {
-		return errors.New(fmt.Sprintf("failed to rename '%s' (no rename attempts left)", node.originalPath))
+		return fmt.Errorf("failed to rename '%s' (no rename attempts left)", node.originalPath)
 	} else {
 		for _, child := range node.children {
 			err := Rename(isActualRun, child, config)
@@ -72,10 +72,10 @@ func Rename(isActualRun bool, node *FsNode, config Config) error {
 
 func sanitizeWithCounter(node FsNode, renameAttemptsThusFar int, config Config) (string, error) {
 	if !(renameAttemptsThusFar >= 0) {
-		log.Fatal(fmt.Sprintf("renameAttemptsThusFar must be >= 0, you provided %d", renameAttemptsThusFar))
+		log.Fatalf("renameAttemptsThusFar must be >= 0, you provided %d", renameAttemptsThusFar)
 	}
 	if !(config.MaxBasenameLength > 0) {
-		log.Fatal(fmt.Sprintf("maxRenameAttempts must be > 0, you provided %d", config.MaxRenameAttemptsPerPath))
+		log.Fatalf("maxRenameAttempts must be > 0, you provided %d", config.MaxRenameAttemptsPerPath)
 	}
 	candidate := Sanitize(node.name)
 	candidate, err := truncateName(candidate, node.isDir, config.MaxBasenameLength)
@@ -101,7 +101,7 @@ func numDigits(n int) int {
 
 func truncateName(name string, isDir bool, maxBasenameLength int) (string, error) {
 	if !(maxBasenameLength >= 1) {
-		return "", errors.New(fmt.Sprintf("maxBasenameLength must be >= 1, you provided %d", maxBasenameLength))
+		return "", fmt.Errorf("maxBasenameLength must be >= 1, you provided %d", maxBasenameLength)
 	}
 	if len(name) <= maxBasenameLength {
 		return name, nil
@@ -112,11 +112,11 @@ func truncateName(name string, isDir bool, maxBasenameLength int) (string, error
 			extension := filepath.Ext(name)
 			if extension != "" {
 				if len(extension) > maxBasenameLength {
-					return "", errors.New(
-						fmt.Sprintf("could not truncate name '%s' to %d characters while preserving file extension '%s'",
+					return "",
+						fmt.Errorf("could not truncate name '%s' to %d characters while preserving file extension '%s'",
 							name,
 							maxBasenameLength,
-							extension))
+							extension)
 				} else {
 					nameWithoutExtension := name[:maxBasenameLength-len(extension)]
 					return nameWithoutExtension + extension, nil

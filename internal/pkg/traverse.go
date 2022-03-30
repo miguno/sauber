@@ -11,7 +11,7 @@ import (
 
 func Find(rootPath string, skipSet map[string]bool) (*FsNode, error) {
 	if _, err := os.Stat(rootPath); errors.Is(err, os.ErrNotExist) {
-		return nil, errors.New(fmt.Sprintf("'%s' does not exist", rootPath))
+		return nil, fmt.Errorf("'%s' does not exist", rootPath)
 	}
 	// Important to get rid of ".." and "." pollution in paths
 	rootPath = filepath.Clean(rootPath)
