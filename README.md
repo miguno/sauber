@@ -110,7 +110,7 @@ Examples:
 Suggestions? Bugs? Questions? Go to https://github.com/miguno/sauber/
 ```
 
-# How are names of files and filders sanitized?
+# How are names of files and folders sanitized?
 
 Here's a short summary of what sanitization rules you can expect. The exact
 rules are defined in [sanitize.go](internal/pkg/sanitize.go), with further
