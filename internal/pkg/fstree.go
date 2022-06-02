@@ -82,6 +82,10 @@ func (node FsNode) Apply(f func(n FsNode)) {
 	}
 }
 
+func (node FsNode) HasParents() bool {
+	return !node.IsRoot()
+}
+
 // HasSiblingOfName returns true if any of the node's siblings is already
 // named the same as the provided name, false otherwise.
 //
@@ -110,14 +114,12 @@ func (node FsNode) OriginalPath() string {
 
 func (node FsNode) Path() string {
 	var path string
-	if node.parent != nil {
+	if node.IsRoot() {
+		path = filepath.Dir(node.OriginalPath())
+	} else {
 		path = (*node.parent).Path()
 	}
 	path = filepath.Join(path, node.name)
-	if node.IsRoot() {
-		originalParentPath := filepath.Dir(node.OriginalPath())
-		path = filepath.Join(originalParentPath, path)
-	}
 	return filepath.Clean(path)
 }
 

@@ -78,3 +78,25 @@ func TestAbsChildShouldBePlacedUnderAbsRoot(t *testing.T) {
 	expected := []string{"/csgo[d]", "/csgo/absolutePath"}
 	assert.Equal(t, expected, root.PathsDecorated())
 }
+
+func TestIsRoot(t *testing.T) {
+	root := FsNode{
+		name:         "/csgo",
+		originalPath: "/csgo",
+		isDir:        true,
+	}
+	assert.True(t, root.IsRoot())
+	assert.False(t, root.HasParents())
+}
+
+func TestHasParents(t *testing.T) {
+	root := FsNode{
+		name:         "/csgo",
+		originalPath: "/csgo",
+		isDir:        true,
+	}
+	root.AddNestedChild("/absolutePath", false)
+	child := root.children[0]
+	assert.False(t, child.IsRoot())
+	assert.True(t, child.HasParents())
+}
