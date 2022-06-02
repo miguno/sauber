@@ -13,6 +13,7 @@ import (
 // Version is used to inject version information during the project build process (see `justfile`).
 var Version = "development"
 
+// TODO: Support multiple positional args as input locations, e.g. `sauber *.mp3`
 // TODO: Increase test coverage
 func main() {
 	type OptionsArgs struct {
