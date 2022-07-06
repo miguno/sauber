@@ -24,13 +24,16 @@ var replacer = strings.NewReplacer(
 	"ö", "oe",
 	"ü", "ue",
 	// U+0308 Combining Diaeresis (https://en.wikipedia.org/wiki/Diaeresis_(diacritic)
-	// This character is a Non-spacing Mark and inherits its script property from the preceding
-	// character. The character is also known as 'double dot above', 'umlaut', 'Greek dialytika',
-	// and 'double derivative'.
+	// This character is a Non-spacing Mark and inherits its script property
+	// from the preceding character. The character is also known as
+	// 'double dot above', 'umlaut', 'Greek dialytika', and 'double derivative'.
 	//
-	// Note how the 'Ä' below is actually two chars: an 'A' followed by U+0308, i.e., the two dots
-	// to be added on top of the 'A'. Try it yourself: put your cursor to the left of the 'Ä', then
-	// move to the right. You will notice that you need two key presses to get across 'Ä'.
+	// Note how the 'Ä' below is actually two chars: an 'A' followed by U+0308,
+	// i.e., the two dots to be added on top of the 'A'. Try it yourself: put
+	// your cursor to the left of the 'Ä', then use the arrow keys on your
+	// keyboard to move the cursor to the right. You will notice that you need
+	// two key presses to get across 'Ä'. (This may not work in all text
+	// editors, such as neovim. It does work in GoLand IDE, for example.)
 	"Ä", "Ae", // A<0308> (see above)
 	"Ö", "Oe", // O<0308> (see above)
 	"Ü", "Ue", // U<0308> (see above)
