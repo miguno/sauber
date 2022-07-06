@@ -18,7 +18,7 @@ user@nas:~$ tree -AF /volume1/music-share
 
 # After
 user@nas:~$ sauber --force /volume1/music-share
-user@nas:~$ ls /volume1/music-share
+user@nas:~$ tree -AF /volume1/music-share
 /volume1/music-share/
 ├── Aehnlich/
 ├── Protege.mp3
