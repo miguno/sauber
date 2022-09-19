@@ -34,3 +34,13 @@ func TestTruncateName(t *testing.T) {
 	_, err3 := truncateName("1234567890.abcdefghij", false, 10)
 	assert.Error(t, err3)
 }
+
+func TestNumDigits(t *testing.T) {
+	assert.Equal(t, 1, numDigits(0))
+	assert.Equal(t, 1, numDigits(3))
+	assert.Equal(t, 1, numDigits(-3))
+	assert.Equal(t, 2, numDigits(42))
+	assert.Equal(t, 2, numDigits(-42))
+	assert.Equal(t, 3, numDigits(123))
+	assert.Equal(t, 3, numDigits(-123))
+}

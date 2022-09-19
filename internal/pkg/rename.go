@@ -91,6 +91,9 @@ func sanitizeWithCounter(node FsNode, renameAttemptsThusFar int, config Config) 
 }
 
 func numDigits(n int) int {
+	if n == 0 {
+		return 1
+	}
 	count := 0
 	for n != 0 {
 		n /= 10
