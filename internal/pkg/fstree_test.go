@@ -100,3 +100,31 @@ func TestHasParents(t *testing.T) {
 	assert.False(t, child.IsRoot())
 	assert.True(t, child.HasParents())
 }
+
+func TestOriginalName(t *testing.T) {
+	root := FsNode{
+		name:         "/csgo",
+		originalPath: "/csgo",
+		isDir:        true,
+	}
+	root.AddNestedChild("/foo", false)
+	root.AddNestedChild("/foo/bar", false)
+	child := root.children[0]
+	assert.Equal(t, "foo", child.OriginalName())
+	grandChild := child.children[0]
+	assert.Equal(t, "bar", grandChild.OriginalName())
+}
+
+func TestOriginalPath(t *testing.T) {
+	root := FsNode{
+		name:         "/csgo",
+		originalPath: "/csgo",
+		isDir:        true,
+	}
+	root.AddNestedChild("/foo", false)
+	root.AddNestedChild("/foo/bar", false)
+	child := root.children[0]
+	assert.Equal(t, "/csgo/foo", child.OriginalPath())
+	grandChild := child.children[0]
+	assert.Equal(t, "/csgo/foo/bar", grandChild.OriginalPath())
+}
