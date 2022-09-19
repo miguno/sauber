@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/fatih/color v1.13.0
 	github.com/jessevdk/go-flags v1.5.0
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.8.0
 	golang.org/x/text v0.3.7
 )
 
