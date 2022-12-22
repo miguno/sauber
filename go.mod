@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/fatih/color v1.13.0
 	github.com/jessevdk/go-flags v1.5.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 	golang.org/x/text v0.3.7
 )
 
