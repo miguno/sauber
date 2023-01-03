@@ -8,7 +8,7 @@ coverage_profile_log := "coverage_profile.txt"
 
 # print available targets
 default:
-    just --list
+    @just --list --justfile {{justfile()}}
 
 # format source code
 format:
