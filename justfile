@@ -51,7 +51,7 @@ test *FLAGS:
 
 # run tests (vanilla), used for CI workflow
 test-vanilla *FLAGS:
-    go test {{FLAGS}} -cover ./...
+    go test -cover {{FLAGS}} ./...
 
 # show test coverage
 coverage:
