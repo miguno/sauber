@@ -16,7 +16,9 @@ jobs:
     name: build
     runs-on: ${{ matrix.platform }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     # https://github.com/extractions/setup-just
     - uses: extractions/setup-just@v1
     - name: Set up Go
