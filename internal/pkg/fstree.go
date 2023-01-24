@@ -28,7 +28,7 @@ type FsNode struct {
 // missing child nodes in the hierarchy as needed (think: sub-directories).
 //
 // For example, if node path is "/csgo", then adding path "faze/ropz" changes
-// the node's tree to have paths "/csgo", "/csgo/faze", "csgo/faze/ropz".
+// the node's tree to have paths "/csgo", "/csgo/faze", "/csgo/faze/ropz".
 //
 // Note to maintainers:
 // This function must operate on `*FsNode` to be able to mutate the tree.
