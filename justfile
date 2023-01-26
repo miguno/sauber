@@ -10,6 +10,16 @@ coverage_profile_log := "coverage_profile.txt"
 default:
     @just --list --justfile {{justfile()}}
 
+# evaluate and print all just variables
+evaluate:
+    @just --evaluate
+
+# print system information such as OS and architecture
+system-info:
+  @echo "architecture: {{arch()}}"
+  @echo "os: {{os()}}"
+  @echo "os family: {{os_family()}}"
+
 # format source code
 format:
     @echo "Formatting source code ..."
