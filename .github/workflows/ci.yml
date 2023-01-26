@@ -41,11 +41,14 @@ jobs:
         #                                                                    ^^^     ^^
         #                                      note the "empty strings" here where the version should be
         nancyVersion: "v1.0.42"
+    - name: Vet
+      # https://pkg.go.dev/cmd/vet
+      run: go vet ./...
     - name: Build
-      #run: go build -v ./...
       run: just build
-    #- name: Test
-    #  run: go test -v ./...
+    # Alternatively:
+    #- name: Test & Build
+    #  run: go test -v ./... && go build -v ./...
 
   release:
     strategy:
