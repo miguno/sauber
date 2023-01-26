@@ -29,12 +29,16 @@ format:
 outdated:
     go list -u -m -json all | go-mod-outdated -update
 
+# detect known vulnerabilities
+audit: vulnerabilities-govulncheck vulnerabilities-nancy
+    go vet ./...
+
 # detect known vulnerabilities (requires https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
-vulnerabilities:
+vulnerabilities-govulncheck:
     govulncheck ./...
 
 # detect known vulnerabilities (requires https://github.com/sonatype-nexus-community/nancy)
-audit:
+vulnerabilities-nancy:
     go list -json -m all | nancy sleuth --loud
 
 # run linters (requires https://github.com/dominikh/go-tools)
