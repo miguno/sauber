@@ -20,6 +20,10 @@ system-info:
   @echo "os: {{os()}}"
   @echo "os family: {{os_family()}}"
 
+# print supported architectures for release builds (GOOS)
+supported-architectures:
+    go tool dist list
+
 # format source code
 format:
     @echo "Formatting source code ..."
