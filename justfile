@@ -100,3 +100,7 @@ release: test-vanilla
         go build -trimpath -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-arm   cmd/sauber/main.go
     GOOS=linux  GOARCH=arm64 \
         go build -trimpath -ldflags "-X 'main.Version={{version}}' -s -w" -o sauber_linux-arm64 cmd/sauber/main.go
+
+# vendor (https://go.dev/ref/mod#vendoring)
+vendor:
+    go mod vendor
