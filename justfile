@@ -31,7 +31,9 @@ format:
 
 # detect outdated modules (requires https://github.com/psampaz/go-mod-outdated)
 outdated:
-    go list -u -m -json all | go-mod-outdated -update
+    # `-mod=readonly` is required when using a vendored setup (like we have),
+    # see https://go.dev/ref/mod#vendoring
+    go list -mod=readonly -u -m -json all | go-mod-outdated -update
 
 # detect known vulnerabilities
 audit: vulnerabilities-govulncheck vulnerabilities-nancy
@@ -43,7 +45,9 @@ vulnerabilities-govulncheck:
 
 # detect known vulnerabilities (requires https://github.com/sonatype-nexus-community/nancy)
 vulnerabilities-nancy:
-    go list -json -m all | nancy sleuth --loud
+    # `-mod=readonly` is required when using a vendored setup (like we have),
+    # see https://go.dev/ref/mod#vendoring
+    go list -mod=readonly -json -m all | nancy sleuth --loud
 
 # run linters (requires https://github.com/dominikh/go-tools)
 lint:
