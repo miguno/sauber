@@ -12,6 +12,10 @@ import (
 func Sanitize(filename string) string {
 	s := replacer.Replace(filename)
 	s = removeAccents(s)
+	s = replaceNonPrintableChars(s)
+	s = replacePrivateUnicodeChars(s)
+	s = removeTrailingSpaceOrDot(s)
+	s = changeReservedFilenames(s)
 	return s
 }
 
@@ -48,6 +52,16 @@ var replacer = strings.NewReplacer(
 	".....", ".",
 	"....", ".",
 	"…", "...", // horizontal ellipsis
+	// illegal file name characters for Windows / Mac / Linux
+	"<", "-",
+	">", "-",
+	":", "-",
+	"\"", "-",
+	"/", "-",
+	"\\", "-",
+	"|", "-",
+	"?", "-",
+	"*", "-",
 )
 
 func removeAccents(s string) string {
@@ -101,4 +115,61 @@ func removeAccents(s string) string {
 		panic(e)
 	}
 	return output
+}
+
+// This function uses a regular expression to match any control characters,
+// which are the non-printable characters in ASCII and Unicode.
+// The [:cntrl:] character class matches all control characters.
+// The ReplaceAllString method of the regexp package is used to replace
+// all matches with an empty string, effectively removing them from the string.
+func replaceNonPrintableChars(filename string) string {
+	reg := regexp.MustCompile("[[:cntrl:]]")
+	return reg.ReplaceAllString(filename, "-")
+}
+
+// This function uses a regular expression to match any character that
+// is a private use character (\\p{Co}) or a invisible formatting indicator
+// (\\p{Cf}) or any code point to which no character has been assigned (\\p{Cn}).
+func replacePrivateUnicodeChars(str string) string {
+	reg := regexp.MustCompile("\\p{Co}|\\p{Cf}")
+	return reg.ReplaceAllString(str, "-")
+}
+
+// If the given filename is a reserved filename, the function adds "_changed" to
+// the original filename and returns the new filename.
+// If the given filename is not a reserved filename,
+// the function returns the original filename.
+func changeReservedFilenames(filename string) string {
+	if isReservedFilename(strings.ToUpper(filename)) {
+		return filename + "_changed"
+	}
+	return filename
+}
+
+// This function first checks if the given filename is one of the reserved
+// filenames by comparing it to a list of reserved filenames.
+// The strings.EqualFold method is used to perform a case-insensitive
+// comparison between the reserved filenames and the given filename.
+func isReservedFilename(filename string) bool {
+	reservedFilenames := []string{"CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "LPT1", "LPT2", "LPT3", "LOCK$"}
+	for _, reservedFilename := range reservedFilenames {
+		if strings.EqualFold(reservedFilename, filename) {
+			return true
+		}
+	}
+	return false
+}
+
+// This function uses a loop to repeatedly remove spaces and dots
+// from the end of the filename until there are no more spaces or dots left.
+// The strings.TrimSuffix method is called twice in each iteration to
+// remove both spaces and dots.
+// If the given filename does not end with a space or a dot,
+// the function simply returns the original filename.
+func removeTrailingSpaceOrDot(filename string) string {
+	for strings.HasSuffix(filename, " ") || strings.HasSuffix(filename, ".") {
+		filename = strings.TrimSuffix(filename, " ")
+		filename = strings.TrimSuffix(filename, ".")
+	}
+	return filename
 }

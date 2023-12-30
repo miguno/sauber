@@ -106,9 +106,26 @@ Examples:
   # Sanitize /volume1/music (including) and all its sub-directories and files.
   # *** WARNING: This command modifies your data! Always do a dry run first! ***
   $ sauber --force /volume1/music
-
+  
 Suggestions? Bugs? Questions? Go to https://github.com/miguno/sauber/
 ```
+
+Step-by-Step:
+1. Enable SSH and ssh with Terminal as admin to Synology DiskStation
+2. (Optional - if you want to execute directly on shared folders) Get root privileges (use admin password) with $ sudo -i
+3. Change directory to where the sauber executable is located
+4. Execute sauber with $ ./sauber
+
+Pro-Tip, if you want to sanatize a lot of files:
+1. Make dry run with sauber and write results to a textfile with $ ./sauber /volume1/Music/ > music.txt
+2. Download music.txt and analyse in a text editor (e.g. Visual Studio Code)
+Remove all lines, where files are unmodified:
+  a) Open search and enable regular expressions, use the following: ^.*\[unmodified\]\n
+  b) Replace all with nothing (empty Replace)
+3. If the result of renames are OK, actually rename the files with $ ./sauber -f /volume1/Music/
+
+
+
 
 # How are names of files and folders sanitized?
 
@@ -126,7 +143,12 @@ examples in [sanitize_test.go](internal/pkg/sanitize_test.go).
 | đĐ                            | dD                               |
 | ęéèê                          | eeee                             |
 | żźžŻŽ                         | zzzZZ                            |
+| Non-printable chars           | - (hyphen)                       |
+| Illegal filename chars        | - (hyphen)                       |
+| Private Unicode chars         | - (hyphen)                       |
 | (and more)                    | (and more)                       |
+
+Also sauber checks for reserved filenames and removes illegal spaces or dots at the end of filenames.
 
 # Why do I need sauber?
 

@@ -24,9 +24,21 @@ func TestSanitize(t *testing.T) {
 		Sanitize("–—"),
 		"replace en-dash and em-dash with hyphens")
 	assert.Equal(t,
-		"...",
-		Sanitize("…"),
+		"... New.txt",
+		Sanitize("… New.text"),
 		"replace horizontal ellipsis")
+	assert.Equal(t,
+		"Your book -The Art of the Last of Us...-..eml",
+		Sanitize("Your book The Art of the Last of Us.....eml"))
+	assert.Equal(t,
+		"The Rise and Fall of Command & Conquer - Documentary.mp4",
+		Sanitize("The Rise and Fall of Command & Conquer  Documentary.mp4"))
+	assert.Equal(t,
+		"LPT3_changed",
+		Sanitize("LPT3"))
+	assert.Equal(t,
+		"Text.doc",
+		Sanitize("Text.doc . "))
 
 	replacedSpecials := "!?%|$"
 	for _, c := range replacedSpecials {
