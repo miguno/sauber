@@ -108,3 +108,10 @@ release: test-vanilla
 # vendor (https://go.dev/ref/mod#vendoring)
 vendor:
     go mod vendor
+
+# watch sources for changes and trigger a rebuild (requires https://github.com/watchexec/watchexec)
+watch:
+    # Watch all go files in the current directory and all subdirectories for
+    # changes.  If something changed, re-run the build.
+    @watchexec -e go -- just build
+
