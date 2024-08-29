@@ -6,7 +6,7 @@ require (
 	github.com/fatih/color v1.17.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/stretchr/testify v1.9.0
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.17.0
 )
 
 require (
