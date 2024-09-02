@@ -113,10 +113,10 @@ vendor:
 watch:
     # Watch all go files in the current directory and all subdirectories for
     # changes.  If something changed, re-run the build.
-    @watchexec -e go -- just build
+    @watchexec --clear -exts go -- just build
 
 # run tests when sources change (requires https://github.com/watchexec/watchexec)
 watch-test:
     # Watch all go files in the current directory and all subdirectories for
     # changes.  If something changed, re-run the build.
-    @watchexec -e go -- just test
+    @watchexec --clear --exts go -- just test
