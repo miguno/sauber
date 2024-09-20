@@ -1,6 +1,6 @@
 timestamp := `date +%s`
 
-semver := "1.0.2"
+semver := "1.0.3-alpha"
 commit := `git show -s --format=%h`
 version := semver + "+" + commit
 
