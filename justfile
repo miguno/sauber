@@ -109,12 +109,12 @@ supported-architectures:
 # run tests with colorized output (requires https://github.com/kyoh86/richgo)
 [group('development')]
 test *FLAGS:
-    richgo test -cover {{FLAGS}} ./...
+    richgo test -cover -race {{FLAGS}} ./...
 
 # run tests (vanilla), used for CI workflow
 [group('development')]
 test-vanilla *FLAGS:
-    go test -cover {{FLAGS}} ./...
+    go test -cover -race {{FLAGS}} ./...
 
 # add missing module requirements for imported packages, removes requirements that aren't used anymore
 [group('development')]
