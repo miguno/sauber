@@ -43,7 +43,10 @@ jobs:
           # as:
           # "https://github.com/sonatype-nexus-community/nancy/releases/download//nancy__linux_amd64.apk"
           #                                                                    ^^^     ^^
-          #                                      note the "empty strings" here where the version should be
+          #                    Note the "empty strings" here where the version should be!
+          #
+          # Versions:
+          # https://github.com/sonatype-nexus-community/nancy
           nancyVersion: "v1.0.46"
 
       - name: Vet
