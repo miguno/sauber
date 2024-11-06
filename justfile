@@ -126,6 +126,11 @@ tidy:
 vendor:
     go mod vendor
 
+# analyze sources for security problems (requires https://github.com/securego/gosec/)
+[group('security')]
+vulnerabilities-gosec:
+    gosec -tests ./...
+
 # detect known vulnerabilities (requires https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
 [group('security')]
 vulnerabilities-govulncheck:
