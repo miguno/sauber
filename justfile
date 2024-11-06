@@ -56,12 +56,21 @@ format:
     @echo "Formatting source code ..."
     gofmt -l -s -w .
 
-# run linters (requires https://github.com/dominikh/go-tools)
+# run all linters
 [group('security')]
-lint:
+lint: lint-staticcheck lint-golangci-lint
+
+# run staticcheck linter (requires https://github.com/dominikh/go-tools)
+[group('security')]
+lint-staticcheck:
     staticcheck -f stylish ./... || \
         (echo "\nRun \`just explain <LintIdentifier, e.g. SA1006>\` for details." && \
         exit 1)
+
+# run golangci-lint linter (requires https://github.com/golangci/golangci-lint)
+[group('security')]
+lint-golangci-lint:
+    golangci-lint run
 
 # detect outdated modules (requires https://github.com/psampaz/go-mod-outdated)
 [group('development')]
