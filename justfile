@@ -35,8 +35,8 @@ outdated:
     # see https://go.dev/ref/mod#vendoring
     go list -mod=readonly -u -m -json all | go-mod-outdated -update
 
-# detect known vulnerabilities
-audit: vulnerabilities-govulncheck vulnerabilities-nancy
+# detect issues and known vulnerabilities
+audit: lint vulnerabilities-govulncheck vulnerabilities-nancy
     go vet ./...
 
 # detect known vulnerabilities (requires https://pkg.go.dev/golang.org/x/vuln/cmd/govulncheck)
