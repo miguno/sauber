@@ -25,7 +25,7 @@ system-info:
 
 # detect issues and known vulnerabilities
 [group('security')]
-audit: lint vulnerabilities-govulncheck vulnerabilities-nancy
+audit: lint vulnerabilities
     go vet ./...
 
 # build executable for local OS
@@ -125,6 +125,10 @@ tidy:
 [group('development')]
 vendor:
     go mod vendor
+
+# runs all vulnerability checks
+[group('security')]
+vulnerabilities: vulnerabilities-gosec vulnerabilities-govulncheck vulnerabilities-nancy
 
 # analyze sources for security problems (requires https://github.com/securego/gosec/)
 [group('security')]
