@@ -7,26 +7,12 @@ import (
 )
 
 func TestSanitize(t *testing.T) {
-	assert.Equal(t,
-		"",
-		Sanitize(""))
-	assert.Equal(t,
-		"foo bar",
-		Sanitize("foo bar"))
-	assert.Equal(t,
-		".DS_Store",
-		Sanitize(".DS_Store"))
-	assert.Equal(t,
-		"@eaDir",
-		Sanitize("@eaDir"))
-	assert.Equal(t,
-		"--",
-		Sanitize("–—"),
-		"replace en-dash and em-dash with hyphens")
-	assert.Equal(t,
-		"...",
-		Sanitize("…"),
-		"replace horizontal ellipsis")
+	assert.Equal(t, "", Sanitize(""))
+	assert.Equal(t, "foo bar", Sanitize("foo bar"))
+	assert.Equal(t, ".DS_Store", Sanitize(".DS_Store"))
+	assert.Equal(t, "@eaDir", Sanitize("@eaDir"))
+	assert.Equal(t, "--", Sanitize("–—"), "replace en-dash and em-dash with hyphens")
+	assert.Equal(t, "...", Sanitize("…"), "replace horizontal ellipsis")
 
 	replacedSpecials := "!?%|$"
 	for _, c := range replacedSpecials {
@@ -39,13 +25,10 @@ func TestSanitize(t *testing.T) {
 	// https://en.wikipedia.org/wiki/Diacritic
 	assert.Equal(t,
 		"aaaaaAcccCCCdDeeeeiilnoooossSSuuuzzzZZ",
-		Sanitize("ạàąâåÅčćçÇČĆđĐęéèêîìłńóôộớšśŚŠùûůżźžŻŽ"),
-		"remove diacritics from a-z and A-Z")
+		Sanitize("ạàąâåÅčćçÇČĆđĐęéèêîìłńóôộớšśŚŠùûůżźžŻŽ"), "remove diacritics from a-z and A-Z")
 
 	// Example song filenames in the wild
-	assert.Equal(t,
-		"1-03 Urtuemlicher Titan .mp3",
-		Sanitize("1-03 Urtümlicher Titan ....mp3"))
+	assert.Equal(t, "1-03 Urtuemlicher Titan .mp3", Sanitize("1-03 Urtümlicher Titan ....mp3"))
 	assert.Equal(t,
 		"4-10 Ein Portraet ueber Torquemada.mp3",
 		Sanitize("4-10 Ein Porträt über Torquemada.mp3"))
