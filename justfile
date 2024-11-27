@@ -54,7 +54,7 @@ explain lint-identifier:
 [group('development')]
 format:
     @echo "Formatting source code ..."
-    gofmt -l -s -w .
+    gofmt -l -s -w $(find . -name '*.go' -not -path './vendor/*')
 
 # run all linters
 [group('security')]
