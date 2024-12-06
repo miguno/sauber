@@ -5,6 +5,9 @@ be read and accessed through shared network drives on the NAS. This solves the
 annoying problem that you cannot access files and folders on a shared network
 drive of a Synology NAS if their names contain special characters, such as
 German umlauts (`Ä`), French accents (`é`), and Polish diacritics (`ł`).
+It also replaces other oddities such as control characters (like the bell
+`U+0007`), invisible characters (like the left-to-right mark `U+200E`), and
+private use characters (like ).
 
 ```sh
 # Before
@@ -126,6 +129,9 @@ examples in [sanitize_test.go](internal/pkg/sanitize_test.go).
 | đĐ                       | dD                         |
 | ęéèê                     | eeee                       |
 | żźžŻŽ                    | zzzZZ                      |
+| Control characters       | - (hyphen)                 |
+| Invisible characters     | - (hyphen)                 |
+| Private use characters   | - (hyphen)                 |
 | (and more)               | (and more)                 |
 
 # Why do I need sauber?

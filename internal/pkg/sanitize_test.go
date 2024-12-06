@@ -14,20 +14,20 @@ func TestSanitize(t *testing.T) {
 	assert.Equal(t, "--", Sanitize("–—"), "replace en-dash and em-dash with hyphens")
 	assert.Equal(t, "...", Sanitize("…"), "replace horizontal ellipsis")
 	assert.Equal(t, "x-...- x", Sanitize("x... x"), "replace private use characters with hyphens")
-	// \u200D : zero width joiner (ZWJ)
-	// \u200E : left-to-right mark (LRM)
-	// \u200F : right-to-left mark (RLM)
-	// \u2060 : word joiner
+	// U+200D aka \u200D : zero width joiner (ZWJ)
+	// U+200E aka \u200E : left-to-right mark (LRM)
+	// U+200F aka \u200F : right-to-left mark (RLM)
+	// U+2060 aka \u2060 : word joiner
 	assert.Equal(t, "----", Sanitize("\u200D\u200E\u200F\u2060"), "replace invisible characters with hyphens")
 
-	// \x00 : null
-	// \x07 : bell
-	// \x08 : backspace
-	// \x09 : tab
-	// \x0A : line feed
-	// \x0D : carriage return
-	// \x1B : escape
-	// \x7F : delete
+	// U+0000 aka \x00 : null
+	// U+0007 aka \x07 : bell
+	// U+0008 aka \x08 : backspace
+	// U+0009 aka \x09 : tab
+	// U+000A aka \x0A : line feed
+	// U+000D aka \x0D : carriage return
+	// U+001B aka \x1B : escape
+	// U+007F aka \x7F : delete
 	assert.Equal(t,
 		"--------",
 		replaceControlCharsWithHyphen("\x00\x07\x08\x09\x0A\x0D\x1B\x7F"),
