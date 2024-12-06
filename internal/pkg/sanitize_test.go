@@ -20,6 +20,19 @@ func TestSanitize(t *testing.T) {
 	// \u2060 : word joiner
 	assert.Equal(t, "----", Sanitize("\u200D\u200E\u200F\u2060"), "replace invisible characters with hyphens")
 
+	// \x00 : null
+	// \x07 : bell
+	// \x08 : backspace
+	// \x09 : tab
+	// \x0A : line feed
+	// \x0D : carriage return
+	// \x1B : escape
+	// \x7F : delete
+	assert.Equal(t,
+		"--------",
+		replaceControlCharsWithHyphen("\x00\x07\x08\x09\x0A\x0D\x1B\x7F"),
+		"replace control characters with hyphens")
+
 	replacedSpecials := "!?%|$"
 	for _, c := range replacedSpecials {
 		assert.Equal(t, "_", Sanitize(string(c)))

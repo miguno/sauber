@@ -112,6 +112,12 @@ func replaceInvisibleCharsWithHyphen(str string) string {
 	return reg.ReplaceAllString(str, "-")
 }
 
+func replaceControlCharsWithHyphen(filename string) string {
+	// [:cntrl:] matches all control characters
+	reg := regexp.MustCompile("[[:cntrl:]]")
+	return reg.ReplaceAllString(filename, "-")
+}
+
 func replacePrivateUseCharsWithHyphen(str string) string {
 	// `\p{Co}`: any code point reserved for private use
 	reg := regexp.MustCompile(`\p{Co}`)
