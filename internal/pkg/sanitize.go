@@ -13,6 +13,7 @@ import (
 func Sanitize(filename string) string {
 	s := replacer.Replace(filename)
 	s = removeAccents(s)
+	s = replaceInvisibleCharsWithHyphen(s)
 	s = replacePrivateUseCharsWithHyphen(s)
 	return s
 }
@@ -103,6 +104,12 @@ func removeAccents(s string) string {
 		panic(e)
 	}
 	return output
+}
+
+func replaceInvisibleCharsWithHyphen(str string) string {
+	// `\p{Cf}`: invisible formatting indicator
+	reg := regexp.MustCompile(`\p{Cf}`)
+	return reg.ReplaceAllString(str, "-")
 }
 
 func replacePrivateUseCharsWithHyphen(str string) string {

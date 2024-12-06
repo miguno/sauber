@@ -14,6 +14,11 @@ func TestSanitize(t *testing.T) {
 	assert.Equal(t, "--", Sanitize("–—"), "replace en-dash and em-dash with hyphens")
 	assert.Equal(t, "...", Sanitize("…"), "replace horizontal ellipsis")
 	assert.Equal(t, "x-...- x", Sanitize("x... x"), "replace private use characters with hyphens")
+	// \u200D : zero width joiner (ZWJ)
+	// \u200E : left-to-right mark (LRM)
+	// \u200F : right-to-left mark (RLM)
+	// \u2060 : word joiner
+	assert.Equal(t, "----", Sanitize("\u200D\u200E\u200F\u2060"), "replace invisible characters with hyphens")
 
 	replacedSpecials := "!?%|$"
 	for _, c := range replacedSpecials {
