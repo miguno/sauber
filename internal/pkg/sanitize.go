@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"regexp"
 	"strings"
 	"unicode"
 
@@ -12,6 +13,7 @@ import (
 func Sanitize(filename string) string {
 	s := replacer.Replace(filename)
 	s = removeAccents(s)
+	s = replacePrivateUseCharsWithHyphen(s)
 	return s
 }
 
@@ -101,4 +103,10 @@ func removeAccents(s string) string {
 		panic(e)
 	}
 	return output
+}
+
+func replacePrivateUseCharsWithHyphen(str string) string {
+	// `\p{Co}`: any code point reserved for private use
+	reg := regexp.MustCompile(`\p{Co}`)
+	return reg.ReplaceAllString(str, "-")
 }

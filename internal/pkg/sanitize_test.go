@@ -13,6 +13,7 @@ func TestSanitize(t *testing.T) {
 	assert.Equal(t, "@eaDir", Sanitize("@eaDir"))
 	assert.Equal(t, "--", Sanitize("–—"), "replace en-dash and em-dash with hyphens")
 	assert.Equal(t, "...", Sanitize("…"), "replace horizontal ellipsis")
+	assert.Equal(t, "x-...- x", Sanitize("x... x"), "replace private use characters with hyphens")
 
 	replacedSpecials := "!?%|$"
 	for _, c := range replacedSpecials {
