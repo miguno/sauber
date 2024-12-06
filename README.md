@@ -1,7 +1,7 @@
 # sauber [![CI workflow status](https://github.com/miguno/sauber/actions/workflows/ci.yml/badge.svg)](https://github.com/miguno/sauber/actions/workflows/ci.yml)
 
 A command line tool that sanitizes filenames on a Synology NAS so the files can
-be read and accessed through shared network drives on the NAS.  This solves the
+be read and accessed through shared network drives on the NAS. This solves the
 annoying problem that you cannot access files and folders on a shared network
 drive of a Synology NAS if their names contain special characters, such as
 German umlauts (`Ä`), French accents (`é`), and Polish diacritics (`ł`).
@@ -32,17 +32,17 @@ user@nas:~$ tree -AF /volume1/music-share
 Download the [**Latest Release**](https://github.com/miguno/sauber/releases)
 for your operating system (see table below) and just run it!
 
-Sauber is a standalone executable, which does not need installation.  It is
+Sauber is a standalone executable, which does not need installation. It is
 recommended, though optional, to rename your downloaded executable to simply
 `sauber`.
 
-| Executable Name               | Operating System     | `uname -m` |
-|-------------------------------|----------------------|------------|
-| `sauber_linux-386`            | Linux x86 32-bit     | `i386`     |
-| `sauber_linux-amd64`          | Linux x86 64-bit     | `x86_64`   |
-| `sauber_linux-arm`            | Linux ARM 32-bit     | `arm`      |
-| `sauber_linux-arm64`          | Linux ARM 64-bit     | `arm64`    |
-| `sauber_macos-arm64`          | macOS ARM 64-bit     | `arm64`    |
+| Executable Name      | Operating System | `uname -m` |
+| -------------------- | ---------------- | ---------- |
+| `sauber_linux-386`   | Linux x86 32-bit | `i386`     |
+| `sauber_linux-amd64` | Linux x86 64-bit | `x86_64`   |
+| `sauber_linux-arm`   | Linux ARM 32-bit | `arm`      |
+| `sauber_linux-arm64` | Linux ARM 64-bit | `arm64`    |
+| `sauber_macos-arm64` | macOS ARM 64-bit | `arm64`    |
 
 To find the correct exectuable for your NAS, run `uname -m` in a terminal on
 the NAS and match it with the corresponding entry in the table above.
@@ -50,13 +50,13 @@ the NAS and match it with the corresponding entry in the table above.
 # Usage
 
 sauber sanitizes the names of files and directories by replacing umlauts,
-accents, and similar diacritics.  By default, it performs a dry run to
+accents, and similar diacritics. By default, it performs a dry run to
 let you verify any changes it would make.
 
 > You must run `sauber` directly on the Synology NAS!
 >
 > Due to the nature of the problem it solves, `sauber` must operate directly on
-> the filesystem of the NAS attached storage.  You do not need to run `sauber`
+> the filesystem of the NAS attached storage. You do not need to run `sauber`
 > as user `root`, however.
 
 ```
@@ -116,17 +116,17 @@ Here's a short summary of what sanitization rules you can expect. The exact
 rules are defined in [sanitize.go](internal/pkg/sanitize.go), with further
 examples in [sanitize_test.go](internal/pkg/sanitize_test.go).
 
-| Original                      | Replacement                      |
-|-------------------------------|----------------------------------|
-| Ä, Ö, Ü, ä, ö, ü, ß           | Ae, Oe, Ue, ae, oe, ue, ss       |
-| !, ?, \|, $                   | _ (underscore)                   |
-| – (en dash), — (em dash)      | - (hyphen)                       |
-| ạàąâåÅ                        | aaaaaA                           |
-| čćçÇČĆ                        | cccCCC                           |
-| đĐ                            | dD                               |
-| ęéèê                          | eeee                             |
-| żźžŻŽ                         | zzzZZ                            |
-| (and more)                    | (and more)                       |
+| Original                 | Replacement                |
+| ------------------------ | -------------------------- |
+| Ä, Ö, Ü, ä, ö, ü, ß      | Ae, Oe, Ue, ae, oe, ue, ss |
+| !, ?, \|, $              | \_ (underscore)            |
+| – (en dash), — (em dash) | - (hyphen)                 |
+| ạàąâåÅ                   | aaaaaA                     |
+| čćçÇČĆ                   | cccCCC                     |
+| đĐ                       | dD                         |
+| ęéèê                     | eeee                       |
+| żźžŻŽ                    | zzzZZ                      |
+| (and more)               | (and more)                 |
 
 # Why do I need sauber?
 
@@ -138,7 +138,7 @@ and directories contain non-ASCII characters, such as German umlauts
 Files with non-ASCII characters work perfectly on the NAS itself,
 but accessing the files remotely via SMB shares does not work: the NAS even
 reports misleading error messages like "The file is missing" or "The file is
-corrupt".  Any such files on the NAS can no longer be read, copied, renamed,
+corrupt". Any such files on the NAS can no longer be read, copied, renamed,
 etc. from other connected devices such as computers and mobile phones.
 
 ```sh
@@ -154,32 +154,32 @@ This is the purpose of `sauber`.
 
 # References
 
-* [Synology DSM Technical Specifications](https://www.synology.com/en-global/dsm/7.0/software_spec/dsm):
+- [Synology DSM Technical Specifications](https://www.synology.com/en-global/dsm/7.0/software_spec/dsm):
   see "Storage Manager" > "Specifications" > "General" to view the
   "Maximum file name length" and "Maximum path name length" limitations
   for the supported filesystems.
-    * For ext4 (see note below in case of encrypted shared folders):
-        * Maximum file name length: 255 bytes
-        * Maximum path name length: 4,096 bytes
-    * For btrfs (see note below in case of encrypted shared folders):
-        * Maximum file name length: 255 bytes
-        * Maximum path name length: 4,096 bytes
-    * Note that different character encodings may contain different data sizes
-      (e.g., a character with UTF-8 encoding may contain 1 to 4 bytes).
-    * For **encrypted** shared folders, the length of file/folder name should
-      be within 143 characters (up to about 47 characters for non-Latin
-      languages), and the length of the file path should be within 2,048
-      characters.
-* [Synology Help: My file name is garbled. What can I do?](https://kb.synology.com/en-global/DSM/tutorial/garbled_name_smb_FileStation)
+  - For ext4 (see note below in case of encrypted shared folders):
+    - Maximum file name length: 255 bytes
+    - Maximum path name length: 4,096 bytes
+  - For btrfs (see note below in case of encrypted shared folders):
+    - Maximum file name length: 255 bytes
+    - Maximum path name length: 4,096 bytes
+  - Note that different character encodings may contain different data sizes
+    (e.g., a character with UTF-8 encoding may contain 1 to 4 bytes).
+  - For **encrypted** shared folders, the length of file/folder name should
+    be within 143 characters (up to about 47 characters for non-Latin
+    languages), and the length of the file path should be within 2,048
+    characters.
+- [Synology Help: My file name is garbled. What can I do?](https://kb.synology.com/en-global/DSM/tutorial/garbled_name_smb_FileStation)
   -- did not help in my case (Synology DSM 6.x), as the SMB configuration was
   already set up correctly
-* [Synology encryption 143 character limit - does it refer to file name or the entire path?](https://www.reddit.com/r/synology/comments/m93gha/synology_encryption_143_character_limit_does_it/)
+- [Synology encryption 143 character limit - does it refer to file name or the entire path?](https://www.reddit.com/r/synology/comments/m93gha/synology_encryption_143_character_limit_does_it/)
 
 # Notes
 
-* Some people who use Synology NAS running DSM 7.x together with macOS clients
-  have reported success when using umlauts etc. in file names.  This required
+- Some people who use Synology NAS running DSM 7.x together with macOS clients
+  have reported success when using umlauts etc. in file names. This required
   enabling and configuring the `vfs_fruit` SMB module in the Samba config
-  at `/etc/samba/smb.conf`.  Unfortunately, this module is only supported on
+  at `/etc/samba/smb.conf`. Unfortunately, this module is only supported on
   Synology DSM 7.x, not on DSM 6.x (see
   [Reddit discussion](https://www.reddit.com/r/synology/comments/p5bz8t/)).
