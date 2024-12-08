@@ -56,6 +56,7 @@ sauber sanitizes the names of files and directories by replacing umlauts,
 accents, and similar diacritics. By default, it performs a dry run to
 let you verify any changes it would make.
 
+> [!IMPORTANT]
 > You must run `sauber` directly on the Synology NAS!
 >
 > Due to the nature of the problem it solves, `sauber` must operate directly on
