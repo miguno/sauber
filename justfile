@@ -152,7 +152,7 @@ vulnerabilities-nancy:
 watch:
     # Watch all go files in the current directory and all subdirectories for
     # changes.  If something changed, re-run the build.
-    @watchexec --clear -exts go -- just build
+    @watchexec --clear --exts go -- just build
 
 # run tests when sources change (requires https://github.com/watchexec/watchexec)
 [group('development')]
