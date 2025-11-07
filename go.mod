@@ -1,12 +1,12 @@
 module github.com/miguno/sauber
 
-go 1.19
+go 1.24.0
 
 require (
 	github.com/fatih/color v1.18.0
 	github.com/jessevdk/go-flags v1.6.1
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/text v0.22.0
+	golang.org/x/text v0.30.0
 )
 
 require (
