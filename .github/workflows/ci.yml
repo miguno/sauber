@@ -35,25 +35,27 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
+      # TODO: Re-enable Nancy GitHub Action once https://github.com/sonatype-nexus-community/nancy-github-action/pull/13 is fixed
+      #
       # https://github.com/marketplace/actions/nancy-for-github-actions
       # This setup is different than our local `just audit` target (which uses
       # nancy), because the latter does not yet seem to work on GitHub Actions.
-      - name: Write go.list for nancy (security audit)
-        run: go list -mod=readonly -json -m all > go.list
-      - name: Security audit with nancy
-        uses: sonatype-nexus-community/nancy-github-action@main
-        with:
-          nancyCommand: sleuth --loud
-          # Explicitly set a nancy version, otherwise the CI build may fail the
-          # installation of nancy, trying to download a package from a URL such
-          # as:
-          # "https://github.com/sonatype-nexus-community/nancy/releases/download//nancy__linux_amd64.apk"
-          #                                                                    ^^^     ^^
-          #                    Note the "empty strings" here where the version should be!
-          #
-          # Versions:
-          # https://github.com/sonatype-nexus-community/nancy
-          nancyVersion: "v1.0.48"
+      #- name: Write go.list for nancy (security audit)
+      #  run: go list -mod=readonly -json -m all > go.list
+      #- name: Security audit with nancy
+      #  uses: sonatype-nexus-community/nancy-github-action@main
+      #  with:
+      #    nancyCommand: sleuth --loud
+      #    # Explicitly set a nancy version, otherwise the CI build may fail the
+      #    # installation of nancy, trying to download a package from a URL such
+      #    # as:
+      #    # "https://github.com/sonatype-nexus-community/nancy/releases/download//nancy__linux_amd64.apk"
+      #    #                                                                    ^^^     ^^
+      #    #                    Note the "empty strings" here where the version should be!
+      #    #
+      #    # Versions:
+      #    # https://github.com/sonatype-nexus-community/nancy
+      #    nancyVersion: "v1.0.48"
 
       - name: Vet
         # https://pkg.go.dev/cmd/vet
