@@ -61,10 +61,10 @@ Suggestions? Bugs? Questions? Go to https://github.com/miguno/sauber/`
 		_, _ = fmt.Fprintln(os.Stderr, s)
 		os.Exit(1)
 	}
-	if !(Options.MaxRenameAttempts >= 1) {
+	if Options.MaxRenameAttempts < 1 {
 		log.Fatalf("max number of rename attempts must be >= 1, you provided %d", Options.MaxRenameAttempts)
 	}
-	if !(Options.Truncate >= 1) {
+	if Options.Truncate < 1 {
 		log.Fatalf("max number of characters in the name of a file/dir must be >= 1, you provided %d",
 			Options.Truncate)
 	}

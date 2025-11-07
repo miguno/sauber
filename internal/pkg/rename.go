@@ -71,10 +71,10 @@ func Rename(isActualRun bool, node *FsNode, config Config) error {
 }
 
 func sanitizeWithCounter(node FsNode, renameAttemptsThusFar int, config Config) (string, error) {
-	if !(renameAttemptsThusFar >= 0) {
+	if renameAttemptsThusFar < 0 {
 		log.Fatalf("renameAttemptsThusFar must be >= 0, you provided %d", renameAttemptsThusFar)
 	}
-	if !(config.MaxBasenameLength > 0) {
+	if config.MaxBasenameLength <= 0 {
 		log.Fatalf("maxRenameAttempts must be > 0, you provided %d", config.MaxRenameAttemptsPerPath)
 	}
 	candidate := Sanitize(node.name)
@@ -103,7 +103,7 @@ func numDigits(n int) int {
 }
 
 func truncateName(name string, isDir bool, maxBasenameLength int) (string, error) {
-	if !(maxBasenameLength >= 1) {
+	if maxBasenameLength < 1 {
 		return "", fmt.Errorf("maxBasenameLength must be >= 1, you provided %d", maxBasenameLength)
 	}
 	if len(name) <= maxBasenameLength {
