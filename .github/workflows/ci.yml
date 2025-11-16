@@ -43,6 +43,9 @@ jobs:
           # https://brandur.org/fragments/go-version-matrix
           GOTOOLCHAIN: local
 
+      - name: Print Go version
+        run: just version
+
       - name: Vet
         run: just vet
 

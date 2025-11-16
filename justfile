@@ -168,3 +168,8 @@ watch-test:
 [group('security')]
 vet:
     go vet ./...
+
+# print version information
+[group('development')]
+version:
+    go version
