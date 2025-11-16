@@ -34,6 +34,32 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: ${{ matrix.go-version }}
+        env:
+          # The special value "local" tells Go to use the bundled Go
+          # version rather than trying to fetch one according to a
+          # `toolchain` value in `go.mod`. This ensures that we're
+          # really running the Go version in the CI matrix rather than
+          # one that the Go command has upgraded to automatically.
+          # https://brandur.org/fragments/go-version-matrix
+          GOTOOLCHAIN: local
+
+      - name: Vet
+        run: just vet
+
+      # https://github.com/golangci/golangci-lint-action
+      # https://golangci-lint.run/docs/welcome/faq/#which-go-versions-are-supported
+      - name: Lint with golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          version: v2.6.2
+
+      # https://github.com/dominikh/staticcheck-action
+      - name: Lint with staticcheck
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
+          install-go: false
+          cache-key: ${{ matrix.go-version }}
 
       # TODO: Re-enable Nancy GitHub Action once https://github.com/sonatype-nexus-community/nancy-github-action/pull/13 is fixed
       #
@@ -56,10 +82,6 @@ jobs:
       #    # Versions:
       #    # https://github.com/sonatype-nexus-community/nancy
       #    nancyVersion: "v1.0.48"
-
-      - name: Vet
-        # https://pkg.go.dev/cmd/vet
-        run: go vet ./...
 
       - name: Build
         run: just build
