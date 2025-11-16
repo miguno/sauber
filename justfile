@@ -26,7 +26,6 @@ system-info:
 # detect issues and known vulnerabilities
 [group('security')]
 audit: lint vulnerabilities
-    go vet ./...
 
 # build executable for local OS
 [group('development')]
@@ -58,7 +57,12 @@ format:
 
 # run all linters
 [group('security')]
-lint: lint-staticcheck lint-golangci-lint
+lint: lint-vet lint-staticcheck lint-golangci-lint
+
+# run golangci-lint linter (requires https://github.com/golangci/golangci-lint)
+[group('security')]
+lint-golangci-lint:
+    @golangci-lint run
 
 # run staticcheck linter (requires https://github.com/dominikh/go-tools)
 [group('security')]
@@ -67,10 +71,9 @@ lint-staticcheck:
         (echo "\nRun \`just explain <LintIdentifier, e.g. SA1006>\` for details." && \
         exit 1)
 
-# run golangci-lint linter (requires https://github.com/golangci/golangci-lint)
+# alias for 'vet'
 [group('security')]
-lint-golangci-lint:
-    @golangci-lint run
+lint-vet: vet
 
 # detect outdated modules (requires https://github.com/psampaz/go-mod-outdated)
 [group('development')]
@@ -160,3 +163,8 @@ watch-test:
     # Watch all go files in the current directory and all subdirectories for
     # changes.  If something changed, re-run the build.
     @watchexec --clear --exts go -- just test
+
+# vet the sources
+[group('security')]
+vet:
+    go vet ./...
