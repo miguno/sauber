@@ -124,6 +124,13 @@ test-vanilla *FLAGS:
 tidy:
     go mod tidy
 
+# update all dependencies, then run tidy and vendor
+[group('development')]
+update:
+    go get -u ./...
+    just tidy
+    just vendor
+
 # vendor (https://go.dev/ref/mod#vendoring)
 [group('development')]
 vendor:
