@@ -14,24 +14,24 @@ func TestShouldErrorWhenRootDoesNotExist(t *testing.T) {
 }
 
 func TestShouldFindSingleFile(t *testing.T) {
-	rootNode, _ := Find("../../test/traverse/root-single-file",
+	rootNode, _ := Find("../test/traverse/root-single-file",
 		DefaultSkipDirectories)
-	expected := []string{"../../test/traverse/root-single-file"}
+	expected := []string{"../test/traverse/root-single-file"}
 	assert.Equal(t, expected, (*rootNode).PathsDecorated())
 }
 
 func TestBasicFind(t *testing.T) {
-	rootNode, _ := Find("../../test/traverse/root-basic/.",
+	rootNode, _ := Find("../test/traverse/root-basic/.",
 		DefaultSkipDirectories)
 	expected := []string{
-		"../../test/traverse/root-basic[d]",
-		"../../test/traverse/root-basic/Foo!Bar?Lorem#[d]",
-		"../../test/traverse/root-basic/Foo!Bar?Lorem#/intro.mp3",
-		"../../test/traverse/root-basic/Größe.mp3",
-		"../../test/traverse/root-basic/Urtümlich[d]",
-		"../../test/traverse/root-basic/Urtümlich/Ähnliche",
-		"../../test/traverse/root-basic/foo[d]",
-		"../../test/traverse/root-basic/foo/README.md",
+		"../test/traverse/root-basic[d]",
+		"../test/traverse/root-basic/Foo!Bar?Lorem#[d]",
+		"../test/traverse/root-basic/Foo!Bar?Lorem#/intro.mp3",
+		"../test/traverse/root-basic/Größe.mp3",
+		"../test/traverse/root-basic/Urtümlich[d]",
+		"../test/traverse/root-basic/Urtümlich/Ähnliche",
+		"../test/traverse/root-basic/foo[d]",
+		"../test/traverse/root-basic/foo/README.md",
 	}
 	assert.Equal(t, expected, (*rootNode).PathsDecorated())
 }

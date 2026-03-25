@@ -7,7 +7,7 @@ import (
 
 	"github.com/jessevdk/go-flags"
 
-	internal "github.com/miguno/sauber/internal/pkg"
+	"github.com/miguno/sauber/internal"
 )
 
 // Version is used to inject version information during the project build process (see `justfile`).

@@ -117,8 +117,8 @@ Suggestions? Bugs? Questions? Go to https://github.com/miguno/sauber/
 # How are names of files and folders sanitized?
 
 Here's a short summary of what sanitization rules you can expect. The exact
-rules are defined in [sanitize.go](internal/pkg/sanitize.go), with further
-examples in [sanitize_test.go](internal/pkg/sanitize_test.go).
+rules are defined in [sanitize.go](internal/sanitize.go), with further
+examples in [sanitize_test.go](internal/sanitize_test.go).
 
 | Original                 | Replacement                |
 | ------------------------ | -------------------------- |
